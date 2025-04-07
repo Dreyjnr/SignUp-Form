@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      .card {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .card-header {
+        background-color: #fff;
+        padding: 25px;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .card-header h3 {
+        margin: 0;
+        color: #333;
+      }
+
+      .card-body {
+        padding: 30px;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+      }
+
+      .form-control {
+        border-radius: 8px;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.25);
+        border-color: #4361ee;
+        outline: none;
+      }
+
+      .btn-primary {
+        background-color: #4361ee;
+        border-color: #4361ee;
+        padding: 12px 0;
+        border-radius: 8px;
+        width: 100%;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: #3a56d4;
+        border-color: #3a56d4;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-footer {
+        background-color: #fff;
+        padding: 20px;
+        text-align: center;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .card-footer a {
+        color: #4361ee;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .card-footer a:hover {
+        text-decoration: underline;
+      }
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .custom-checkbox {
+        margin-right: 10px;
+      }
+
+      @media (max-width: 576px) {
+        .card {
+          margin: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <div class="card">
+            <div class="card-header">
+              <h3>Create Account</h3>
+              <p class="text-muted">Welcome to DRE Kennels</p>
+            </div>
+            <div class="card-body">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Full Name"
+                  aria-label="Full Name"
+                  id="fullName"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Email Address"
+                  aria-label="Email Address"
+                  id="email"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Password"
+                  aria-label="Password"
+                  id="password"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Confirm Password"
+                  aria-label="Confirm Password"
+                  id="confirmPassword"
+                />
+              </div>
+              <div class="checkbox-container">
+                <input
+                  type="checkbox"
+                  class="form-check-input custom-checkbox"
+                  id="terms"
+                />
+                <label class="form-check-label" for="terms"
+                  >I agree to the terms and conditions</label
+                >
+              </div>
+              <button class="btn btn-primary" onclick="submitForm()">
+                Sign Up
+              </button>
+            </div>
+            <div class="card-footer">
+              <p>Already have an account? <a href="#">Log in</a></p>
+            </div>
+          </div>
+          <div class="container mt-4" id="userInfo"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let users = [];
+
+      function submitForm() {
+        let fullName = document.getElementById("fullName").value.toLowerCase();
+        let email = document.getElementById("email").value.toLowerCase();
+        let password = document.getElementById("password").value;
+        let confirmPassword = document.getElementById("confirmPassword").value;
+        let termsChecked = document.getElementById("terms").checked;
+
+        if (!fullName || !email || !password || !confirmPassword) {
+          alert("Please fill in all fields");
+        } else if (!email.includes("@" && ".com")) {
+          alert("Input a valid Email Address");
+        } else if (password.length < 8) {
+          alert("Password must be minimum of 8 characters");
+        } else if (password !== confirmPassword) {
+          alert("Passwords do not match");
+        } else if (!termsChecked) {
+          alert("Please agree to the terms and conditions");
+        } else {
+          let user = {
+            fullName: fullName,
+            email: email,
+            password: password,
+          };
+
+          users.push(user);
+
+          localStorage.setItem("users", JSON.stringify(users));
+
+          displayUsers();
+
+          document.getElementById("fullName").value = "";
+          document.getElementById("email").value = "";
+          document.getElementById("password").value = "";
+          document.getElementById("confirmPassword").value = "";
+          document.getElementById("terms").checked = false;
+        }
+      }
+
+      function displayUsers() {
+        userInfo.innerHTML = "";
+
+        let storedUsers = localStorage.getItem("users");
+
+        if (storedUsers) {
+          let parsedUsers = JSON.parse(storedUsers);
+
+          parsedUsers.forEach((user, i) => {
+            userInfo.innerHTML += `
+                <div class="card mt-3">
+                  <div class="card-header">
+                    <h5>User ${i + 1}</h5>
+                  </div>
+                  <div class="card-body">
+                    <p><strong>Full Name:</strong> ${user.fullName}</p>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>Password:</strong> ${user.password}</p>
+                  </div>
+                </div>
+              `;
+          });
+        }
+      }
+
+      displayUsers();
+    </script>
+  </body>
+</html>

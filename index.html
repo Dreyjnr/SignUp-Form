@@ -181,7 +181,7 @@
     </div>
 
     <script>
-      let users = [];
+      let users = JSON.parse(localStorage.getItem("users")) || [];
 
       function submitForm() {
         let fullName = document.getElementById("fullName").value.toLowerCase();

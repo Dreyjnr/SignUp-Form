@@ -172,7 +172,7 @@
               </button>
             </div>
             <div class="card-footer">
-              <p>Already have an account? <a href="#">Log in</a></p>
+              <p>Already have an account? <a href="./index1.html">Log in</a></p>
             </div>
           </div>
           <div class="container mt-4" id="userInfo"></div>
@@ -185,7 +185,7 @@
 
       function submitForm() {
         let fullName = document.getElementById("fullName").value.toLowerCase();
-        let email = document.getElementById("email").value.toLowerCase();
+        let email = document.getElementById("email").value.toLowerCase().trim();
         let password = document.getElementById("password").value;
         let confirmPassword = document.getElementById("confirmPassword").value;
         let termsChecked = document.getElementById("terms").checked;
@@ -213,6 +213,8 @@
 
           localStorage.setItem("users", JSON.stringify(users));
 
+          alert("Account created successfully. You may login now");
+
           displayUsers();
 
           document.getElementById("fullName").value = "";
@@ -220,6 +222,8 @@
           document.getElementById("password").value = "";
           document.getElementById("confirmPassword").value = "";
           document.getElementById("terms").checked = false;
+
+          window.location.href = "logIn.html"
         }
       }
 

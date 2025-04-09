@@ -206,11 +206,13 @@
   </body>
   <script>
     // let users = JSON.parse(localStorage.getItem("users")) || [];
-    let users = JSON.parse(localStorage.getItem("users"))
-    let founduserName = users.find((u) => {
-      return u.fullName;
-    });
+    let users = JSON.parse(localStorage.getItem("users"));
+    // let founduserName = users.find((u) => {
+    //   return u.fullName;
+    // });
+    let userIndex = localStorage.getItem("loginUserIndex");
+    let loginUser = users[userIndex];
 
-    userName.innerHTML = `<h3>Mr. ${founduserName.fullName.toUpperCase()}</h3> <p>Administrator</p>`;
+    userName.innerHTML = `<h3>Mr. ${loginUser.fullName.toUpperCase()}</h3> <p>Administrator</p>`;
   </script>
 </html>

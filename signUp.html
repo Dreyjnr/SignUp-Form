@@ -172,7 +172,7 @@
               </button>
             </div>
             <div class="card-footer">
-              <p>Already have an account? <a href="./index1.html">Log in</a></p>
+              <p>Already have an account? <a href="./logIn.html">Log in</a></p>
             </div>
           </div>
           <div class="container mt-4" id="userInfo"></div>
@@ -181,6 +181,7 @@
     </div>
 
     <script>
+      let button = document.querySelector(".btn.btn-primary");
       let users = JSON.parse(localStorage.getItem("users")) || [];
 
       function submitForm() {
@@ -203,27 +204,34 @@
         } else if (!termsChecked) {
           alert("Please agree to the terms and conditions");
         } else {
-          let user = {
-            fullName: fullName,
-            email: email,
-            password: password,
-          };
+          button.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
+          button.disabled = true;
 
-          users.push(user);
+          setTimeout(() => {
+            let user = {
+              fullName: fullName,
+              email: email,
+              password: password,
+            };
 
-          localStorage.setItem("users", JSON.stringify(users));
+            users.push(user);
 
-          alert("Account created successfully. You may login now");
+            localStorage.setItem("users", JSON.stringify(users));
 
-          displayUsers();
+            alert("Account created successfully. You may login now");
 
-          document.getElementById("fullName").value = "";
-          document.getElementById("email").value = "";
-          document.getElementById("password").value = "";
-          document.getElementById("confirmPassword").value = "";
-          document.getElementById("terms").checked = false;
+            displayUsers();
 
-          window.location.href = "logIn.html"
+            document.getElementById("fullName").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("confirmPassword").value = "";
+            document.getElementById("terms").checked = false;
+
+            window.location.href = "logIn.html";
+            button.innerHTML = "Sign Up";
+            button.disabled = false;
+          }, 3000);
         }
       }
 

@@ -147,6 +147,7 @@
     </div>
   </body>
   <script>
+    let button = document.querySelector(".login-btn");
     let users = JSON.parse(localStorage.getItem("users"));
 
     function logIn() {
@@ -158,11 +159,24 @@
         alert("Account does not exist, Please signUp");
         window.location.href = "signUp.html";
       } else {
+        button.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
+        button.disabled = true;
+
         if (foundUser.password === password.value) {
-          alert("Login successful");
-          window.location.href = "dashBoard.html";
+          setTimeout(() => {
+            alert("Login successful");
+            let userIndex = users.findIndex((u) => {
+              return u.email === foundUser.email;
+            });
+            localStorage.setItem("loginUserIndex", userIndex);
+            window.location.href = "dashBoard.html";
+            button.innerHTML = "Login";
+            button.disabled = false;
+          }, 3000);
         } else {
           alert("Email or Password Incorrect");
+          button.innerHTML = "Login";
+          button.disabled = false;
         }
       }
     }

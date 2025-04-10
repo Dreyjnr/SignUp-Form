@@ -83,18 +83,52 @@
         font-size: 1.1rem;
       }
 
-      .stat-card {
+      .logout-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
         text-align: center;
-        padding: 20px;
+        text-decoration: none;
       }
 
-      .stat-value {
-        font-size: 2rem;
-        font-weight: bold;
+      .logout-btn:hover {
+        background-color: #c82333;
+      }
+
+      .advert-card {
+        text-align: center;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .advert-img {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+
+      .advert-title {
+        font-size: 1.2rem;
+        font-weight: 600;
         margin-bottom: 5px;
       }
 
-      .stat-label {
+      .advert-price {
+        color: #28a745;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .advert-description {
         color: #6c757d;
         font-size: 0.9rem;
       }
@@ -121,6 +155,40 @@
         border-bottom: 1px solid #e9ecef;
         font-weight: 600;
       }
+
+      .input-group {
+        margin-bottom: 15px;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+
+      .post-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .post-btn:hover {
+        background-color: #0069d9;
+      }
+
+      .image-preview {
+        width: 100%;
+        height: 200px;
+        object-fit: fill;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -134,73 +202,56 @@
 
       <div class="date-time">
         <h3>Current Date & Time</h3>
-        <p>Tuesday, April 8, 2025</p>
+        <p>Tuesday, April 10, 2025</p>
         <p>11:10:49 AM</p>
       </div>
 
-      <div class="row mb-4">
-        <div class="col-md-3 col-sm-6 mb-3">
-          <div class="card stat-card">
-            <div class="stat-value text-primary">42</div>
-            <div class="stat-label">Available Kennels</div>
-            <i class="bi bi-house-door-fill text-primary display-5"></i>
+      <a href="#" class="logout-btn" onclick="logOut()">Logout</a>
+
+      <div class="card dashboard-container mt-4">
+        <div class="card-header">Post New Dog Advert</div>
+        <div class="card-body">
+          <div class="input-group">
+            <input
+              type="text"
+              id="dog-breed"
+              class="input-field"
+              placeholder="Dog Breed"
+            />
           </div>
-        </div>
-        <div class="col-md-3 col-sm-6 mb-3">
-          <div class="card stat-card">
-            <div class="stat-value text-success">28</div>
-            <div class="stat-label">Occupied Kennels</div>
-            <i class="bi bi-check-circle-fill text-success display-5"></i>
+          <div class="input-group">
+            <input
+              type="text"
+              id="dog-price"
+              class="input-field"
+              placeholder="Price"
+            />
           </div>
-        </div>
-        <div class="col-md-3 col-sm-6 mb-3">
-          <div class="card stat-card">
-            <div class="stat-value text-warning">15</div>
-            <div class="stat-label">Upcoming Bookings</div>
-            <i class="bi bi-calendar-check text-warning display-5"></i>
+          <div class="input-group">
+            <input
+              type="file"
+              id="dog-image"
+              accept="image/*"
+              onchange="prevImage()"
+            />
           </div>
-        </div>
-        <div class="col-md-3 col-sm-6 mb-3">
-          <div class="card stat-card">
-            <div class="stat-value text-danger">5</div>
-            <div class="stat-label">Pending Requests</div>
-            <i
-              class="bi bi-exclamation-triangle-fill text-danger display-5"
-            ></i>
-          </div>
+          <img
+            id="image-preview"
+            class="image-preview"
+            src=""
+            alt="Image Preview"
+          />
+          <button onclick="postAdv()" class="post-btn">Post Advert</button>
         </div>
       </div>
 
-      <div class="card dashboard-container">
-        <div class="card-header">Recent Bookings</div>
-        <div class="card-body">
-          <div class="list-group list-group-flush">
-            <div class="list-group-item">
-              <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1">Buddy (Golden Retriever)</h6>
-                <small class="text-muted">Apr 15 - Apr 20</small>
-              </div>
-              <p class="mb-1">Owner: John Smith</p>
-              <small class="text-muted">Kennel 12A</small>
-            </div>
-            <div class="list-group-item">
-              <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1">Max (Labrador)</h6>
-                <small class="text-muted">May 18 - May 22</small>
-              </div>
-              <p class="mb-1">Owner: Sarah Johnson</p>
-              <small class="text-muted">Kennel 15B</small>
-            </div>
-            <div class="list-group-item">
-              <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1">Charlie (Beagle)</h6>
-                <small class="text-muted">Jun 20 - Jun 25</small>
-              </div>
-              <p class="mb-1">Owner: Michael Brown</p>
-              <small class="text-muted">Kennel 09C</small>
-            </div>
-          </div>
-        </div>
+      <div
+        id="advSec"
+        style="display: none"
+        class="card dashboard-container mt-4"
+      >
+        <div class="card-header">Dog Adverts</div>
+        <div class="card-body" id="adverts-container"></div>
       </div>
     </div>
   </body>
@@ -213,6 +264,94 @@
     let userIndex = localStorage.getItem("loginUserIndex");
     let loginUser = users[userIndex];
 
+    if (!userIndex) {
+      alert("Intruder! Intruder!! Intruder!!!");
+      document.body.style.display = "none";
+      window.location.href = "login.html";
+    }
+
     userName.innerHTML = `<h3>Mr. ${loginUser.fullName.toUpperCase()}</h3> <p>Administrator</p>`;
+
+    function logOut() {
+      localStorage.removeItem("loginUserIndex");
+      alert("Successfully logged out. See you soon");
+      window.location.href = "login.html";
+    }
+
+    function prevImage() {
+      let prevImg = document.getElementById("image-preview");
+      let dogImage = document.getElementById("dog-image");
+
+      let myReader = new FileReader();
+
+      myReader.readAsDataURL(dogImage.files[0]);
+
+      myReader.addEventListener("load", (i) => {
+        let resultImg = i.target.result;
+        prevImg.src = resultImg;
+        prevImg.style.display = "block";
+      });
+    }
+
+    function postAdv() {
+      let breed = document.getElementById("dog-breed").value;
+      let price = document.getElementById("dog-price").value;
+      let dogImage = document.getElementById("dog-image");
+
+      if (!breed || !price || !dogImage.files[0]) {
+        alert("Please fill in all fields and select an image");
+      } else {
+        let myReader = new FileReader();
+        myReader.readAsDataURL(dogImage.files[0]);
+
+        myReader.addEventListener("load", (i) => {
+          advSec.style.display = "block";
+          let advDiv = document.getElementById("adverts-container");
+
+          advDiv.innerHTML =
+            `
+        <div class="card advert-card">
+            <img src="${i.target.result}" class="advert-img" alt="${breed}">
+            <h5 class="advert-title">${breed}</h5>
+            <p class="advert-price">$${price}</p>
+        </div>
+    ` + advDiv.innerHTML;
+
+          let adverts = JSON.parse(localStorage.getItem("adverts")) || [];
+          adverts.unshift({
+            image: i.target.result,
+            breed: breed,
+            price: price,
+          });
+
+          localStorage.setItem("adverts", JSON.stringify(adverts));
+
+          document.getElementById("dog-breed").value = "";
+          document.getElementById("dog-price").value = "";
+          document.getElementById("dog-image").value = "";
+          document.getElementById("image-preview").style.display = "none";
+        });
+      }
+    }
+
+    window.addEventListener("load", () => {
+      let advDiv = document.getElementById("adverts-container");
+      let adverts = JSON.parse(localStorage.getItem("adverts")) || [];
+
+      adverts.forEach((ad) => {
+        let newCardHTML = `
+            <div class="card advert-card">
+                <img src="${ad.image}" class="advert-img" alt="${ad.breed}">
+                <h5 class="advert-title">${ad.breed}</h5>
+                <p class="advert-price">$${ad.price}</p>
+            </div>
+        `;
+        advDiv.innerHTML = newCardHTML + advDiv.innerHTML;
+      });
+
+      if (adverts.length > 0) {
+        advSec.style.display = "block";
+      }
+    });
   </script>
 </html>
